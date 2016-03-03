@@ -1,0 +1,29 @@
+{
+  "version": "1.0.0-*",
+  "description": "TasksProject.Tests Class Library",
+  "authors": [ "Peter Stone-Thompson" ],
+  "tags": [ "" ],
+  "projectUrl": "",
+  "licenseUrl": "",
+  "frameworks": {
+    "net451": {
+      "dependencies": {
+        "NUnit.ReSharperRunner3": "3.0.12"
+      }
+    },
+    "dotnet5.4": {
+      "dependencies": {
+        "Microsoft.CSharp": "4.0.1-beta-23516",
+        "System.Collections": "4.0.11-beta-23516",
+        "System.Linq": "4.0.1-beta-23516",
+        "System.Runtime": "4.0.21-beta-23516",
+        "System.Threading": "4.0.11-beta-23516"
+      }
+    }
+  },
+  "dependencies": {
+    "NUnit": "3.0.1",
+    "TasksProject.Data": "1.0.0-*",
+    "TasksProject.Shared": "1.0.0-*"
+  }
+}

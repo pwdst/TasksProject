@@ -16,6 +16,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TasksProject.Data", "src\Ta
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TasksProject.Shared", "src\TasksProject.Shared\TasksProject.Shared.xproj", "{428DB069-AFC4-48B2-BC2C-5090777419D7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{22897DD3-D2DB-488D-B093-9DC222EFC301}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TasksProject.Tests", "tests\TasksProject.Tests\TasksProject.Tests.xproj", "{9C5D088B-76CC-43A5-A503-999A684EDF8F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +38,10 @@ Global
 		{428DB069-AFC4-48B2-BC2C-5090777419D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{428DB069-AFC4-48B2-BC2C-5090777419D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{428DB069-AFC4-48B2-BC2C-5090777419D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C5D088B-76CC-43A5-A503-999A684EDF8F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C5D088B-76CC-43A5-A503-999A684EDF8F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C5D088B-76CC-43A5-A503-999A684EDF8F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C5D088B-76CC-43A5-A503-999A684EDF8F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +50,6 @@ Global
 		{6CAAFA48-CEF1-4952-B268-01485363FCEE} = {10317421-0C33-4334-A63D-29CAB35A008D}
 		{C0C726FC-67F1-4E22-B729-15EA4583527E} = {10317421-0C33-4334-A63D-29CAB35A008D}
 		{428DB069-AFC4-48B2-BC2C-5090777419D7} = {10317421-0C33-4334-A63D-29CAB35A008D}
+		{9C5D088B-76CC-43A5-A503-999A684EDF8F} = {22897DD3-D2DB-488D-B093-9DC222EFC301}
 	EndGlobalSection
 EndGlobal
