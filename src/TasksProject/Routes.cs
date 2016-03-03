@@ -8,8 +8,8 @@
         internal static void MapRoutes(IRouteBuilder routes)
         {
             routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    name: "TasksList",
+                    template: "{controller=Tasks}/{action=List}/");
         }
     }
 }
