@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.0.0-*",
   "description": "TasksProject.Data Class Library",
   "authors": [ "Peter Stone-Thompson" ],
@@ -16,6 +16,7 @@
     }
   },
   "dependencies": {
+    "Microsoft.Extensions.DependencyInjection.Abstractions": "1.0.0-rc1-final",
     "TasksProject.Shared": "1.0.0-*"
   }
 }

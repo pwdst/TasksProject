@@ -1,11 +1,12 @@
-﻿using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-
-namespace TasksProject
+﻿namespace TasksProject
 {
+    using Microsoft.AspNet.Builder;
+    using Microsoft.AspNet.Hosting;
+    using Microsoft.Extensions.Configuration;
+    using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Logging;
+    using Data;
+
     public class Startup
     {
         public Startup(IHostingEnvironment env)
@@ -28,6 +29,8 @@ namespace TasksProject
         {
             // Add framework services.
             services.AddApplicationInsightsTelemetry(Configuration);
+
+            services.ConfigureDataServices();
 
             services.AddMvc();
         }
