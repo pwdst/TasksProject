@@ -56,14 +56,6 @@ namespace TasksProject.Controllers
             return RedirectToAction("List");
         }
 
-        [HttpPost, Route("task/{taskId:guid}/restore"), ValidateAntiForgeryToken]
-        public IActionResult Restore(Guid taskId)
-        {
-            _tasksRepository.RestoreTask(taskId);
-
-            return RedirectToAction("List");
-        }
-
         [HttpPost, Route("task/{taskId:guid}/update"), ValidateAntiForgeryToken]
         public IActionResult Update(Guid taskId, string title, string description)
         {
