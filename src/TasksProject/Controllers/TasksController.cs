@@ -3,15 +3,20 @@
 namespace TasksProject.Controllers
 {
     using System;
+    using Shared.Interfaces.ReadModels;
     using Shared.Interfaces.Repositories;
 
     public class TasksController : Controller
     {
+        private readonly ITasksReadModel _tasksReadModel;
+
         private readonly ITasksRepository _tasksRepository;
 
-        public TasksController(ITasksRepository tasksRepository)
+        public TasksController(ITasksReadModel tasksReadModel, ITasksRepository tasksRepository)
         {
-            _tasksRepository = tasksRepository;
+            _tasksReadModel = tasksReadModel;
+
+            _tasksRepository = tasksRepository;   
         }
 
         public IActionResult List()
