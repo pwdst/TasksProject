@@ -1,7 +1,9 @@
 ﻿namespace TasksProject.Data.ReadModels
 {
     using System.Collections.Generic;
+    using System.Linq;
     using Interfaces.DataStore;
+    using Mapping;
     using Shared.Interfaces.ReadModels;
     using Shared.Projections;
 
@@ -16,17 +18,23 @@
 
         public int DeletedTaskCount()
         {
-            throw new System.NotImplementedException();
+            return _taskStore.DeletedTasks.Count;
         }
 
         public IEnumerable<DeletedTask> GetDeletedTasks()
         {
-            throw new System.NotImplementedException();
+            return _taskStore.DeletedTasks.OrderBy(dt => dt.CreatedOn).Select(DeletedTaskMapping.Map).ToArray();
         }
 
         public IEnumerable<Task> GetTasks()
         {
-            throw new System.NotImplementedException();
+            var inProgressTasks = _taskStore.InProgressTasks.Select(TaskMapping.Map);
+
+            var completedTasks = _taskStore.CompletedTasks.Select(TaskMapping.Map);
+
+            var combinedTasks = inProgressTasks.Union(completedTasks);
+
+            return combinedTasks.OrderBy(t => t.CreatedOn).ToArray();
         }
     }
 }
