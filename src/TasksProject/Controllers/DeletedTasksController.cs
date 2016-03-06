@@ -21,10 +21,12 @@
         [HttpGet, Route("deleted-tasks")]
         public IActionResult List()
         {
-            throw new NotImplementedException();
+            var deletedTasks = _tasksReadModel.GetDeletedTasks();
+
+            return View(deletedTasks);
         }
 
-        [HttpPost, Route("task/{taskId:guid}/restore"), ValidateAntiForgeryToken]
+        [HttpPost, Route("task/{taskId:guid}/restore", Name = "RestoreDeletedTask"), ValidateAntiForgeryToken]
         public IActionResult Restore(Guid taskId)
         {
             _tasksRepository.RestoreTask(taskId);

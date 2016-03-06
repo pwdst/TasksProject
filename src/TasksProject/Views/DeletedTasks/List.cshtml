@@ -1,0 +1,27 @@
+﻿@model IEnumerable<TasksProject.Shared.Projections.DeletedTask>
+
+@{
+    ViewBag.Title = "Deleted Tasks";
+}
+
+@if (Model != null && Model.Any())
+{
+    <ul>
+        @foreach (var deletedTask in Model)
+        {
+            <li>
+                    <h3>@deletedTask.Title</h3>
+                <dl>
+                    <dt>Description</dt>
+                    <dd>@deletedTask.Description</dd>
+                    <dt>Created On</dt>
+                    <dd>@deletedTask.CreatedOn</dd>
+                </dl>
+                <form action="@Url.RouteUrl("RestoreDeletedTask", new { taskId = deletedTask.Id })" method="post">
+                    @Html.AntiForgeryToken()
+                    <button class="" type="submit">Restore</button>
+                </form>
+            </li>
+        }
+    </ul>
+}
