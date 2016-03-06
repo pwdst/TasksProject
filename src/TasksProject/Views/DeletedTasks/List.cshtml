@@ -6,31 +6,44 @@
 
 @if (Model != null && Model.Any())
 {
-    <ul>
-        @foreach (var deletedTask in Model)
-        {
-            <li>
+    <section class="section">
+        <header>
+            <h1>@ViewBag.Title <span class="glyphicon glyphicon-trash"></span></h1>
+        </header>
+        <ul>
+            @foreach (var deletedTask in Model)
+            {
+                <li>
                     <h3>@deletedTask.Title</h3>
-                <dl>
-                    <dt>Description</dt>
-                    <dd>@deletedTask.Description</dd>
-                    <dt>Created On</dt>
-                    <dd>@deletedTask.CreatedOn</dd>
-                </dl>
-                <form action="@Url.RouteUrl("RestoreDeletedTask", new {taskId = deletedTask.Id})" method="post">
-                    @Html.AntiForgeryToken()
-                    <button class="" type="submit">Restore</button>
-                </form>
-            </li>
-        }
-    </ul>
+                    <dl>
+                        <dt>Description</dt>
+                        <dd>@deletedTask.Description</dd>
+                        <dt>Created On</dt>
+                        <dd>@deletedTask.CreatedOn</dd>
+                    </dl>
+                    <form action="@Url.RouteUrl("RestoreDeletedTask", new {taskId = deletedTask.Id})" method="post">
+                        @Html.AntiForgeryToken()
+                        <button class="btn btn-primary" type="submit">Restore</button>
+                    </form>
+                </li>
+            }
+        </ul>
+    </section>
 
-    <form action="@Url.RouteUrl("PurgeDeletedTasks")" method="post">
-        @Html.AntiForgeryToken()
-        <button class="" type="submit">Purge Deleted Tasks</button>
-    </form>
+    <section class="bg-danger section">
+        <header>
+            <h2>Purge Deleted Tasks</h2>
+        </header>
+        <p>This will permanently remove all deleted tasks</p>
+        <form action="@Url.RouteUrl("PurgeDeletedTasks")" method="post">
+            @Html.AntiForgeryToken()
+            <button class="btn btn-danger" type="submit">Purge Deleted Tasks</button>
+        </form>
+    </section>
 }
 else
 {
+    <h1>@ViewBag.Title <span class="glyphicon glyphicon-trash"></span></h1>
+
     <p>No Deleted Tasks</p>
 }

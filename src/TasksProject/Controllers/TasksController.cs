@@ -5,6 +5,7 @@ namespace TasksProject.Controllers
     using System;
     using Shared.Interfaces.ReadModels;
     using Shared.Interfaces.Repositories;
+    using ViewModels;
 
     public class TasksController : Controller
     {
@@ -21,18 +22,27 @@ namespace TasksProject.Controllers
 
         public IActionResult List()
         {
-            return View();
+            var tasks = _tasksReadModel.GetTasks();
+
+            var deletedTaskCount = _tasksReadModel.DeletedTaskCount();
+
+            var model = new TasksListViewModel(tasks, deletedTaskCount);
+
+            return View(model);
         }
 
-        [HttpPost, Route("task/add"), ValidateAntiForgeryToken]
-        public IActionResult Add(string title, string description)
+        [HttpPost, Route("task/add", Name = "AddTask"), ValidateAntiForgeryToken]
+        public IActionResult Add(AddTaskViewModel model)
         {
-            _tasksRepository.AddTask(title, description);
+            if (ModelState.IsValid)
+            {
+                _tasksRepository.AddTask(model.Title, model.Description);
+            }
 
             return RedirectToAction("List");
         }
 
-        [HttpPost, Route("task/{taskId:guid}/delete"), ValidateAntiForgeryToken]
+        [HttpPost, Route("task/{taskId:guid}/delete", Name = "DeleteTask"), ValidateAntiForgeryToken]
         public IActionResult Delete(Guid taskId)
         {
             _tasksRepository.DeleteTask(taskId);
@@ -40,15 +50,13 @@ namespace TasksProject.Controllers
             return RedirectToAction("List");
         }
 
-        [HttpPost, Route("task/{taskId:guid}/completed"), ValidateAntiForgeryToken]
+        [HttpPost, Route("task/{taskId:guid}/completed", Name = "MarkTaskCompleted"), ValidateAntiForgeryToken]
         public IActionResult MarkCompleted(Guid taskId)
         {
             _tasksRepository.MarkComplete(taskId);
 
             return RedirectToAction("List");
         }
-
-        
 
         [HttpPost, Route("task/{taskId:guid}/update"), ValidateAntiForgeryToken]
         public IActionResult Update(Guid taskId, string title, string description)

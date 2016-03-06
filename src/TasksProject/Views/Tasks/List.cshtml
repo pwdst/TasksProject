@@ -1,3 +1,83 @@
-﻿@{
+﻿@model TasksProject.ViewModels.TasksListViewModel
+
+@{
     ViewBag.Title = "Tasks List";
 }
+
+<h1>@ViewBag.Title</h1>
+
+<section class="existing-tasks section">
+    <header>
+        <h2>Existing Tasks</h2>
+    </header>
+
+    @if (Model.Tasks != null && Model.Tasks.Any())
+    {
+        <ul>
+            @foreach (var task in Model.Tasks)
+            {
+                <li>
+                    <h3 class="@(task.IsCompleted ? "completed" : null)">@task.Title</h3>
+                    <dl>
+                        <dt>Description</dt>
+                        <dd>@task.Description</dd>
+                        <dt>Created On</dt>
+                        <dd>@task.CreatedOn.ToString("dd/MMM/yyyy hh:mm:ss")</dd>
+                        @if (task.IsCompleted)
+                        {
+                            <dt>Completed On</dt>
+                            <dd>@task.CompletedOn?.ToString("dd/MMM/yyyy hh:mm:ss")</dd>
+                        }
+                    </dl>
+                    @if (!task.IsCompleted)
+                    {
+                        <ul class="list-unstyled task-actions">
+                            <li>
+                                <form action="@Url.RouteUrl("MarkTaskCompleted", new {taskId = task.Id})" class="form-inline" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button class="btn btn-success" type="submit"><span class="glyphicon glyphicon-ok"></span> Mark Completed</button>
+                                </form>
+                            </li>
+                            <li>
+                                <form action="@Url.RouteUrl("DeleteTask", new {taskId = task.Id})" class="form-inline" method="post">
+                                    @Html.AntiForgeryToken()
+                                    <button class="btn btn-danger" type="submit"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+                                </form>
+                            </li>
+                        </ul>
+                    }
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p>No Tasks</p>
+    }
+
+    @if (Model.DeletedTaskCount > 0)
+    {
+        <p>
+            @Html.RouteLink($"{Model.DeletedTaskCount} Deleted Tasks", "DeletedTasks")
+        </p>
+    }
+</section>
+
+<section class="add-task section">
+    <header>
+        <h2>Add New Task</h2>
+    </header>
+
+    <form action="@Url.RouteUrl("AddTask")" method="post">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+        </div>
+        <button class="btn btn-primary" type="submit">Add Task</button>
+    </form>
+</section>

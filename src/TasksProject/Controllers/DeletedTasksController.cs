@@ -18,7 +18,7 @@
             _tasksRepository = tasksRepository;
         }
 
-        [HttpGet, Route("deleted-tasks")]
+        [HttpGet, Route("deleted-tasks", Name = "DeletedTasks")]
         public IActionResult List()
         {
             var deletedTasks = _tasksReadModel.GetDeletedTasks();

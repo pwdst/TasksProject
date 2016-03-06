@@ -17,15 +17,23 @@ textarea {
     max-width: 280px;
 }
 
-/* Carousel */
-.carousel-caption {
-    z-index: 10 !important;
+.section {
+    border-radius: 0.5em;
+    border: 1px solid lightgrey;
+    padding: 1em;
 }
 
-    .carousel-caption p {
-        font-size: 20px;
-        line-height: 1.4;
-    }
+.section:not(:last-of-type) {
+    margin: 1em 0;
+}
+
+.completed {
+    text-decoration: line-through;
+}
+
+.task-actions li:not(:last-child) {
+    margin-bottom: 1em;
+}
 
 @media (min-width: 768px) {
     .carousel-caption {
