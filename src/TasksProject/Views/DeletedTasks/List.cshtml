@@ -17,11 +17,20 @@
                     <dt>Created On</dt>
                     <dd>@deletedTask.CreatedOn</dd>
                 </dl>
-                <form action="@Url.RouteUrl("RestoreDeletedTask", new { taskId = deletedTask.Id })" method="post">
+                <form action="@Url.RouteUrl("RestoreDeletedTask", new {taskId = deletedTask.Id})" method="post">
                     @Html.AntiForgeryToken()
                     <button class="" type="submit">Restore</button>
                 </form>
             </li>
         }
     </ul>
+
+    <form action="@Url.RouteUrl("PurgeDeletedTasks")" method="post">
+        @Html.AntiForgeryToken()
+        <button class="" type="submit">Purge Deleted Tasks</button>
+    </form>
+}
+else
+{
+    <p>No Deleted Tasks</p>
 }

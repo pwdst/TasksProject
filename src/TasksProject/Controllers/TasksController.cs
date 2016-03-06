@@ -48,13 +48,7 @@ namespace TasksProject.Controllers
             return RedirectToAction("List");
         }
 
-        [HttpPost, Route("task/purge-deleted"), ValidateAntiForgeryToken]
-        public IActionResult PurgeDeleted()
-        {
-            _tasksRepository.PurgeDeleted();
-
-            return RedirectToAction("List");
-        }
+        
 
         [HttpPost, Route("task/{taskId:guid}/update"), ValidateAntiForgeryToken]
         public IActionResult Update(Guid taskId, string title, string description)

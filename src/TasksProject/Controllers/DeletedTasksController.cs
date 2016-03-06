@@ -26,6 +26,14 @@
             return View(deletedTasks);
         }
 
+        [HttpPost, Route("task/purge-deleted", Name = "PurgeDeletedTasks"), ValidateAntiForgeryToken]
+        public IActionResult PurgeDeleted()
+        {
+            _tasksRepository.PurgeDeleted();
+
+            return RedirectToAction("List");
+        }
+
         [HttpPost, Route("task/{taskId:guid}/restore", Name = "RestoreDeletedTask"), ValidateAntiForgeryToken]
         public IActionResult Restore(Guid taskId)
         {
