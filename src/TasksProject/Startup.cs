@@ -32,6 +32,10 @@
 
             services.ConfigureDataServices();
 
+            services.AddSession();
+
+            services.AddCaching();
+
             services.AddMvc();
         }
 
@@ -56,6 +60,8 @@
             }
 
             app.UseApplicationInsightsExceptionTelemetry();
+
+            app.UseSession();
 
             app.UseStaticFiles();
 
