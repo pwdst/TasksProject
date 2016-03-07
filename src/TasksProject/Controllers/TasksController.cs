@@ -1,12 +1,14 @@
 ﻿namespace TasksProject.Controllers
 {
+    using Microsoft.AspNet.Mvc;
+    using Microsoft.AspNet.Mvc.ModelBinding;
+    using Newtonsoft.Json;
+    using Shared.Interfaces.ReadModels;
+    using Shared.Interfaces.Repositories;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Microsoft.AspNet.Mvc;
-    using Microsoft.AspNet.Mvc.ModelBinding;
-    using Shared.Interfaces.ReadModels;
-    using Shared.Interfaces.Repositories;
+    using Microsoft.Extensions.Logging;
     using ViewModels;
 
     public class TasksController : Controller
@@ -22,11 +24,15 @@
 
         private readonly ITasksRepository _tasksRepository;
 
-        public TasksController(ITasksReadModel tasksReadModel, ITasksRepository tasksRepository)
+        private readonly ILogger _logger;
+
+        public TasksController(ITasksReadModel tasksReadModel, ITasksRepository tasksRepository, ILoggerFactory loggerFactory)
         {
             _tasksReadModel = tasksReadModel;
 
-            _tasksRepository = tasksRepository;   
+            _tasksRepository = tasksRepository;
+
+            _logger = loggerFactory.CreateLogger("TaskControllerErrors");
         }
 
         public IActionResult List()
@@ -39,7 +45,14 @@
 
             if (TempData.ContainsKey(TempDataKeys.AddTaskViewModel))
             {
-                var addTaskViewModel = TempData[TempDataKeys.AddTaskViewModel] as AddTaskViewModel;
+                var addTaskViewModel = JsonConvert.DeserializeObject<AddTaskViewModel>(TempData[TempDataKeys.AddTaskViewModel] as string,
+                    new JsonSerializerSettings
+                    {
+                        Error = (sender, args) =>
+                        {
+                            _logger.LogInformation("Error deserializing Add Task View Model", args);
+                        }
+                    });
 
                 if (addTaskViewModel != null)
                 {
@@ -74,7 +87,10 @@
             }
             else
             {
-                TempData.Add(TempDataKeys.AddTaskViewModel, model);
+                TempData.Add(TempDataKeys.AddTaskViewModel, JsonConvert.SerializeObject(model, new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Include
+                }));
 
                 var modelStateInvalid = ModelState.Where(ms => ms.Value.ValidationState == ModelValidationState.Invalid)
                     .ToDictionary(mse => mse.Key, mse => mse.Value.Errors);
